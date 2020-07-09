@@ -11,11 +11,13 @@ metadata:
     app: 'frontend'
   annotations:
     'consul.hashicorp.com/connect-inject': 'true'
+    'consul.hashicorp.com/service-name': 'frontend'
     'consul.hashicorp.com/connect-service-upstreams': 'backend:8080'
 spec:
   containers:
     - name: frontend
       image: ezraroi/frontend:0.0.1
+      imagePullPolicy: Always
       ports:
         - containerPort: 8081
           name: http

@@ -9,10 +9,12 @@ metadata:
   name: backend
   annotations:
     'consul.hashicorp.com/connect-inject': 'true'
+    'consul.hashicorp.com/service-name': 'backend'
 spec:
   containers:
     - name: backend
       image: ezraroi/backend:0.0.1
+      imagePullPolicy: Always
       ports:
         - containerPort: 8080
           name: http

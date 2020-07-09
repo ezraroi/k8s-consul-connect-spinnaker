@@ -15,15 +15,19 @@ public class SimpleController {
     private static final Logger log = LoggerFactory.getLogger(SimpleController.class);
 
     private final String backendUrl;
+    private final String hostname;
     private final RestTemplate restTemplate;
 
-    public SimpleController(RestTemplate restTemplate, @Value("${backend.service.url}") String url) {
+    public SimpleController(RestTemplate restTemplate,
+                            @Value("${backend.service.url}") String url, @Value("${HOSTNAME:127.0.0.1}") String hostname) {
         this.restTemplate = restTemplate;
         this.backendUrl = url;
+        this.hostname = hostname;
     }
 
     @GetMapping("/")
     public String homePage(Model model) {
+        log.info("Returning page");
         model.addAttribute("appVersion", 1);
         String url = this.backendUrl + "/hello";
         String message = "";
@@ -37,6 +41,7 @@ public class SimpleController {
             message = "Failed to connect to backend service";
         }
         model.addAttribute("message", message);
+        model.addAttribute("hostname", hostname);
         return "home";
     }
 }
