@@ -12,7 +12,7 @@ public class Controller {
 
     @GetMapping("/hello")
     public String getMessage() {
-        return "Hello from version 1";
+        return "Hello from version 2";
     }
 
     @GetMapping("/conf")
