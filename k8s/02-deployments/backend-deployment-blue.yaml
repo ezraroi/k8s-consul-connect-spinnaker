@@ -1,0 +1,46 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: backend
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-deployment-blue
+  labels:
+    app: backend-blue
+spec:
+  selector:
+    matchLabels:
+      app: backend-blue
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  template:
+    metadata:
+      labels:
+        app: backend-blue
+      annotations:
+        'consul.hashicorp.com/connect-inject': 'true'
+        'consul.hashicorp.com/service-name': 'backend'
+        'consul.hashicorp.com/service-meta-version': '1'
+        'consul.hashicorp.com/service-tags': 'v1'
+    spec:
+      containers:
+        - name: backend
+          image: ezraroi/backend:0.0.1
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+              name: http
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8080
+            initialDelaySeconds: 10
+            failureThreshold: 3
+            periodSeconds: 3
+      serviceAccountName: backend
