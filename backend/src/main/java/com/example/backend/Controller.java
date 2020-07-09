@@ -20,7 +20,7 @@ public class Controller {
     @GetMapping("/hello")
     public String getMessage() {
         log.info("Api hello called");
-        return "Hello from version 1 on " + hostname;
+        return "Hello from version 2 on " + hostname;
     }
 
     @GetMapping("/conf")
