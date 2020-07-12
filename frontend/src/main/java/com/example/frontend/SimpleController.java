@@ -1,5 +1,8 @@
 package com.example.frontend;
 
+import com.example.backend.HelloRequest;
+import com.example.backend.MyServiceGrpc;
+import net.devh.boot.grpc.client.inject.GrpcClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,6 +22,9 @@ public class SimpleController {
     private final String conf;
     private final RestTemplate restTemplate;
 
+    @GrpcClient("myService")
+    private MyServiceGrpc.MyServiceBlockingStub myServiceStub;
+
     public SimpleController(RestTemplate restTemplate,
                             @Value("${backend.service.url}") String url,
                             @Value("${HOSTNAME:127.0.0.1}") String hostname,
@@ -35,6 +41,7 @@ public class SimpleController {
         model.addAttribute("appVersion", 1);
         String url = this.backendUrl + "/hello";
         String message = "";
+        String gRPC = "";
         try {
             ResponseEntity<String> response
                     = restTemplate.getForEntity(url, String.class);
@@ -44,9 +51,16 @@ public class SimpleController {
             log.error("Failed to connect to backend", exception);
             message = "Failed to connect to backend service";
         }
+
+        HelloRequest request = HelloRequest.newBuilder()
+                .setName("Frontend")
+                .build();
+        gRPC = myServiceStub.sayHello(request).getMessage();
+
         model.addAttribute("message", message);
         model.addAttribute("hostname", hostname);
         model.addAttribute("conf", conf);
+        model.addAttribute("grpc", gRPC);
         return "home";
     }
 }
