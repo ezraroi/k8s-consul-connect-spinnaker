@@ -3,7 +3,8 @@
 <body style="background-color: blue; color: aliceblue">
 <h1>Hello !</h1>
 <p>Version is: <span th:text="${appVersion}">Version</span></p>
-<p>Message from REST API: <span th:text="${message}">Default Message</span></p>
+<p>Message from REST API (Mesh): <span th:text="${restEnvoy}">Default Message</span></p>
+<p>Message from REST API (Client Side LB): <span th:text="${restClient}">Default Message</span></p>
 <p>Message from gRPC: <span th:text="${grpc}">Default Message</span></p>
 <p>HOSTNAME: <span th:text="${hostname}">unknown</span></p>
 <p>Config Value: <span th:text="${conf}">unknown</span></p>
