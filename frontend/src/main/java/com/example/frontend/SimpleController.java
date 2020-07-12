@@ -5,9 +5,8 @@ import com.example.backend.MyServiceGrpc;
 import net.devh.boot.grpc.client.inject.GrpcClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cloud.client.loadbalancer.LoadBalanced;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +22,7 @@ public class SimpleController {
     private final String hostname;
     private final String conf;
     private final RestTemplate restTemplate;
+    private final RestTemplate notLoadBalancedRestTemplate;
 
     @GrpcClient("myService")
     private MyServiceGrpc.MyServiceBlockingStub myServiceStub;
@@ -30,11 +30,13 @@ public class SimpleController {
     public SimpleController(RestTemplate restTemplate,
                             @Value("${backend.service.url}") String url,
                             @Value("${HOSTNAME:127.0.0.1}") String hostname,
-                            @Value("${conf.value}") String conf) {
+                            @Value("${conf.value}") String conf,
+                            RestTemplateBuilder builder) {
         this.restTemplate = restTemplate;
         this.backendUrl = url;
         this.hostname = hostname;
         this.conf = conf;
+        this.notLoadBalancedRestTemplate = builder.build();
     }
 
     @GetMapping("/")
@@ -51,19 +53,23 @@ public class SimpleController {
 
     private String getEnvoyMessage() {
         String url = this.backendUrl + "/hello";
-        return getHttpResponse(url);
+        return getHttpResponse(url, false);
     }
 
     private String getClientSideLBMessage() {
-        return getHttpResponse("http://backend/hello");
+        return getHttpResponse("http://backend/hello", true);
     }
 
-    private String getHttpResponse(String url) {
+    private String getHttpResponse(String url, boolean loadBalanced) {
         String message = "";
         log.info("REST URL: " + url);
         try {
-            ResponseEntity<String> response
-                    = restTemplate.getForEntity(url, String.class);
+            ResponseEntity<String> response;
+            if (loadBalanced) {
+                response = restTemplate.getForEntity(url, String.class);
+            } else {
+                response = notLoadBalancedRestTemplate.getForEntity(url, String.class);
+            }
             log.info("Got response code: " + response.getStatusCode());
             message = response.getBody();
         } catch (Exception exception) {
