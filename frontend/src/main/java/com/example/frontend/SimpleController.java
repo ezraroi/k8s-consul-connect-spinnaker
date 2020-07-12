@@ -16,13 +16,17 @@ public class SimpleController {
 
     private final String backendUrl;
     private final String hostname;
+    private final String conf;
     private final RestTemplate restTemplate;
 
     public SimpleController(RestTemplate restTemplate,
-                            @Value("${backend.service.url}") String url, @Value("${HOSTNAME:127.0.0.1}") String hostname) {
+                            @Value("${backend.service.url}") String url,
+                            @Value("${HOSTNAME:127.0.0.1}") String hostname,
+                            @Value("${conf.value}") String conf) {
         this.restTemplate = restTemplate;
         this.backendUrl = url;
         this.hostname = hostname;
+        this.conf = conf;
     }
 
     @GetMapping("/")
@@ -42,6 +46,7 @@ public class SimpleController {
         }
         model.addAttribute("message", message);
         model.addAttribute("hostname", hostname);
+        model.addAttribute("conf", conf);
         return "home";
     }
 }

@@ -23,6 +23,7 @@ spec:
         app: frontend
       annotations:
         'consul.hashicorp.com/connect-inject': 'true'
+        'consul.hashicorp.com/connect-service-protocol': 'http'
         'consul.hashicorp.com/service-name': 'frontend'
         'consul.hashicorp.com/service-meta-version': '1'
         'consul.hashicorp.com/service-tags': 'v1'
@@ -39,9 +40,9 @@ spec:
             httpGet:
               path: /actuator/health
               port: 8081
-            initialDelaySeconds: 10
-            failureThreshold: 3
-            periodSeconds: 3
+            initialDelaySeconds: 30
+            failureThreshold: 5 
+            periodSeconds: 10
           env:
             - name: BACKEND_SERVICE_URL
               value: 'http://127.0.0.1:8080'
