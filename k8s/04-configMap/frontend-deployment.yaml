@@ -51,4 +51,8 @@ spec:
                 configMapKeyRef:
                   name: forntend-config-map
                   key: CONF_VALUE
+            - name: SPRING_CLOUD_CONSUL_HOST
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.hostIP
       serviceAccountName: frontend

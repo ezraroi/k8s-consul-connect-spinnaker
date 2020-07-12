@@ -46,4 +46,8 @@ spec:
           env:
             - name: BACKEND_SERVICE_URL
               value: 'http://127.0.0.1:8080'
+            - name: SPRING_CLOUD_CONSUL_HOST
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.hostIP
       serviceAccountName: frontend
