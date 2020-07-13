@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: backend-grpc
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: backend-grpc
+  annotations:
+    'consul.hashicorp.com/connect-inject': 'true'
+    'consul.hashicorp.com/service-name': 'backend-grpc'
+    'consul.hashicorp.com/connect-service-protocol': 'grpc'
+spec:
+  containers:
+    - name: backend-grpc
+      image: ezraroi/backend-grpc:0.0.1
+      imagePullPolicy: Always
+      ports:
+        - containerPort: 9090
+          name: grpc
+  serviceAccountName: backend-grpc

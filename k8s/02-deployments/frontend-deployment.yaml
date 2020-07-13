@@ -27,7 +27,7 @@ spec:
         'consul.hashicorp.com/service-name': 'frontend'
         'consul.hashicorp.com/service-meta-version': '1'
         'consul.hashicorp.com/service-tags': 'v1'
-        'consul.hashicorp.com/connect-service-upstreams': 'backend:8080'
+        'consul.hashicorp.com/connect-service-upstreams': 'backend:8080,backend-grpc:9090'
     spec:
       containers:
         - name: frontend

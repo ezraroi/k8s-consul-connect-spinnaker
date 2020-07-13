@@ -12,7 +12,7 @@ metadata:
   annotations:
     'consul.hashicorp.com/connect-inject': 'true'
     'consul.hashicorp.com/service-name': 'frontend'
-    'consul.hashicorp.com/connect-service-upstreams': 'backend:8080'
+    'consul.hashicorp.com/connect-service-upstreams': 'backend:8080,backend-grpc:9090'
 spec:
   containers:
     - name: frontend
