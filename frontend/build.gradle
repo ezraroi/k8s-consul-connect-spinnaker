@@ -49,6 +49,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.cloud:spring-cloud-starter-sleuth'
+	implementation 'org.springframework.cloud:spring-cloud-starter-zipkin'
 
 	implementation 'net.devh:grpc-client-spring-boot-starter:2.9.0.RELEASE'
 	implementation 'io.micrometer:micrometer-registry-prometheus:latest.release'
