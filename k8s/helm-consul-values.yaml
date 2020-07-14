@@ -10,9 +10,15 @@ ui:
 # Enable Connect for secure communication between nodes
 connectInject:
   enabled: true
-  #centralConfig:
-    #enabled: true
-    #defaultProtocol: http
+  centralConfig:
+    enabled: "true"
+    proxyDefaults: |
+      {
+        "envoy_prometheus_bind_addr": "0.0.0.0:9102",
+        "envoy_dogstatsd_url": "udp://127.0.0.1:9125",
+        "envoy_extra_static_clusters_json": "{\"connect_timeout\": \"3.000s\", \"dns_lookup_family\": \"V4_ONLY\", \"lb_policy\": \"ROUND_ROBIN\", \"load_assignment\": { \"cluster_name\": \"jaeger_9411\",\"endpoints\": [{\"lb_endpoints\": [{\"endpoint\": {\"address\": {\"socket_address\": {\"address\": \"simplest-collector\",\"port_value\": 9411,\"protocol\": \"TCP\"}}}}]}]},\"name\": \"jaeger_9411\",\"type\": \"STRICT_DNS\"}",
+        "envoy_tracing_json": "{\"http\": {\"name\": \"envoy.zipkin\",\"config\": {\"collector_cluster\": \"jaeger_9411\", \"collector_endpoint\": \"/api/v1/spans\",\"trace_id_128bit\": true, \"shared_span_context\": true}}}"
+      }
 
 client:
   enabled: true
