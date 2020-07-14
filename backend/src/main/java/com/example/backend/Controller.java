@@ -4,10 +4,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @RestController
 public class Controller {
@@ -33,6 +32,12 @@ public class Controller {
     public String getConf() {
         log.info("Api conf called");
         return conf;
+    }
+
+    @GetMapping("/headers")
+    public void printHeaders(@RequestHeader Map<String, String> headers) {
+        headers.entrySet().forEach(stringStringEntry ->
+                log.info(stringStringEntry.getKey() + ": " + stringStringEntry.getValue()));
     }
 
     @PostMapping(path="/add")
