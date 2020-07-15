@@ -5,3 +5,4 @@ metadata:
   namespace: default
 data:
   CONF_VALUE: "This is Amazing"
+  VALUE: '${execution[''id'']} ${execution[''id''].toLowerCase()}'
