@@ -38,13 +38,12 @@ spec:
             initialDelaySeconds: 30
             failureThreshold: 5 
             periodSeconds: 10
+          envFrom:
+            - configMapKeyRef:
+                name: forntend-config-map
           env:
             - name: BACKEND_SERVICE_URL
               value: 'http://127.0.0.1:8080'
-            - name: CONF_VALUE
-              valueFrom:
-                configMapKeyRef:
-                  name: forntend-config-map
             - name: SPRING_CLOUD_CONSUL_HOST
               valueFrom:
                 fieldRef:
