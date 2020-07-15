@@ -30,7 +30,7 @@ spec:
     spec:
       containers:
         - name: backend-grpc
-          image: ezraroi/backend-grpc:0.0.1
+          image: docker.io/ezraroi/backend-grpc:0.0.1
           imagePullPolicy: Always
           ports:
             - containerPort: 9090
