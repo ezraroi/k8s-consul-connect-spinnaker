@@ -27,7 +27,7 @@ spec:
     spec:
       containers:
         - name: backend
-          image: docker.io/ezraroi/backend:0.0.1
+          image: docker.io/ezraroi/backend
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
