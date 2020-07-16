@@ -10,12 +10,12 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: frontend
+      app: frontend-deployment
   replicas: 2
   template:
     metadata:
       labels:
-        app: frontend
+        app: frontend-deployment
       annotations:
         'consul.hashicorp.com/connect-inject': 'true'
         'consul.hashicorp.com/connect-service-protocol': 'http'
