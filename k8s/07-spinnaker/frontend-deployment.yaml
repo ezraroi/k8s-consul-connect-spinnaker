@@ -39,7 +39,7 @@ spec:
             failureThreshold: 5 
             periodSeconds: 10
           envFrom:
-            - configMapKeyRef:
+            - configMapRef:
                 name: forntend-config-map
           env:
             - name: BACKEND_SERVICE_URL
