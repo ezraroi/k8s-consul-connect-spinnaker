@@ -26,7 +26,7 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: docker.io/ezraroi/frontend
+          image: index.docker.io/ezraroi/frontend
           imagePullPolicy: Always
           ports:
             - containerPort: 8081
