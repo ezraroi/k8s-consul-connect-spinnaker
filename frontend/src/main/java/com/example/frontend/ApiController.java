@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Random;
+
 @RestController
 public class ApiController {
 
@@ -16,10 +18,12 @@ public class ApiController {
 
     private final RestTemplate restTemplate;
     private final String backendUrl;
+    private final Random random;
 
     public ApiController(RestTemplateBuilder builder, @Value("${backend.service.url}") String hostname) {
         this.restTemplate = builder.build();
         this.backendUrl = hostname;
+        this.random = new Random();
     }
 
     @GetMapping("/api/headers")
@@ -28,6 +32,13 @@ public class ApiController {
         response = restTemplate.getForEntity(this.backendUrl + "/headers", String.class);
         log.info("Got response code: " + response.getStatusCode());
 
+    }
+
+    @GetMapping("/api/error")
+    public void getError() {
+        log.info("Api error was called");
+        if (random.nextBoolean())
+            throw new RuntimeException("Error");
     }
 
     @GetMapping("/api/db")
