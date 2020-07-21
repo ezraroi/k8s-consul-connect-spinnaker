@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
+import java.util.Random;
 
 @RestController
 public class Controller {
@@ -21,6 +22,8 @@ public class Controller {
 
     @Autowired
     private UserRepository userRepository;
+
+    private final Random random =  new Random();
 
     @GetMapping("/hello")
     public String getMessage() {
@@ -47,6 +50,13 @@ public class Controller {
         n.setEmail(email);
         userRepository.save(n);
         return "Saved";
+    }
+
+    @GetMapping("/api/error")
+    public void getError() {
+        log.info("Api error was called");
+        if (random.nextBoolean())
+            throw new RuntimeException("Error");
     }
 
     @GetMapping(path="/all")
