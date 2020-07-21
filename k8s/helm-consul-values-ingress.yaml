@@ -1,0 +1,37 @@
+# Choose an optional name for the datacenter
+global:
+  datacenter: minidc
+
+# Enable the Consul Web UI via a NodePort
+ui:
+  service:
+    type: 'NodePort'
+
+# Enable Connect for secure communication between nodes
+connectInject:
+  enabled: true
+  centralConfig:
+    enabled: "true"
+    
+ingressGateways:
+  enabled: true
+  gateways:
+    - name: ingress-gateway
+      replicas: 1
+      service:
+        type: 'NodePort'
+        ports:
+          - port: 8786
+            nodePort: 30002
+
+client:
+  enabled: true
+  grpc: true
+
+# Use only one Consul server for local development
+server:
+  replicas: 1
+  bootstrapExpect: 1
+  disruptionBudget:
+    enabled: true
+    maxUnavailable: 0
