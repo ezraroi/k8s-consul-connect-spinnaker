@@ -49,4 +49,10 @@ public class ApiController {
         return response.getBody();
     }
 
+    @GetMapping("/api/backend_error")
+    public void getBackendError() {
+        ResponseEntity<Void> response;
+        response = restTemplate.getForEntity(this.backendUrl + "/api/error", Void.class);
+        log.info("Got response code: " + response.getStatusCode());
+    }
 }
