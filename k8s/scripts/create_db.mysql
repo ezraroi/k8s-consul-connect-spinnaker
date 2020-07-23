@@ -1,0 +1,3 @@
+create database db_example; 
+create user 'user'@'%' identified by 'password';
+grant all on db_example.* to 'user'@'%';

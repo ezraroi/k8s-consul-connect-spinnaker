@@ -30,10 +30,13 @@ spec:
         'consul.hashicorp.com/service-meta-version': '1'
         'consul.hashicorp.com/service-tags': 'v1'
         'consul.hashicorp.com/connect-service-upstreams': 'mysql:3306'
+        'prometheus.io/port': '8080'
+        'prometheus.io/scrape': 'true'
+        'prometheus.io/path': '/actuator/prometheus'
     spec:
       containers:
         - name: backend
-          image: ezraroi/backend:0.0.1
+          image: ezraroi/backend:0.0.3
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
