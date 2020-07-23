@@ -28,7 +28,7 @@ public class Controller {
     @GetMapping("/hello")
     public String getMessage() {
         log.info("Api hello called");
-        return "Hello from version 3 on " + hostname;
+        return "Hello from version 4 on " + hostname;
     }
 
     @GetMapping("/conf")
@@ -55,8 +55,7 @@ public class Controller {
     @GetMapping("/api/error")
     public void getError() {
         log.info("Api error was called");
-        if (random.nextBoolean())
-            throw new RuntimeException("Error");
+        throw new RuntimeException("Error");
     }
 
     @GetMapping(path="/all")
