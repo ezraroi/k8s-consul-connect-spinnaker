@@ -4,5 +4,5 @@ metadata:
   name: forntend-config-map
   namespace: default
 data:
-  CONF_VALUE: "This is crazy Amazing"
+  CONF_VALUE: "This is really working"
   VALUE: '${execution[''id'']} ${execution[''id''].toLowerCase()}'
