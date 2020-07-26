@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-deployment-canary
+  labels:
+    app: backend-canary
+spec:
+  selector:
+    matchLabels:
+      app: backend-canary
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: backend-canary
+      annotations:
+        'consul.hashicorp.com/connect-inject': 'true'
+        'consul.hashicorp.com/service-name': 'backend'
+        'consul.hashicorp.com/connect-service-protocol': 'http'
+        'consul.hashicorp.com/service-meta-version': '1'
+        'consul.hashicorp.com/service-tags': 'v1'
+        'consul.hashicorp.com/connect-service-upstreams': 'mysql:3306'
+        'prometheus.io/port': '8080'
+        'prometheus.io/scrape': 'true'
+        'prometheus.io/path': '/actuator/prometheus'
+    spec:
+      containers:
+        - name: backend
+          image: index.docker.io/ezraroi/backend:0.0.4
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+              name: http
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8080
+            initialDelaySeconds: 30
+            failureThreshold: 5 
+            periodSeconds: 10
+      serviceAccountName: backend
