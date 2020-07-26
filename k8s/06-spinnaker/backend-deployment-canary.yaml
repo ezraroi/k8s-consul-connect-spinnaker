@@ -13,6 +13,7 @@ spec:
     metadata:
       labels:
         app: backend-canary
+        type: canary
       annotations:
         'consul.hashicorp.com/connect-inject': 'true'
         'consul.hashicorp.com/service-name': 'backend'
@@ -26,7 +27,7 @@ spec:
     spec:
       containers:
         - name: backend
-          image: index.docker.io/ezraroi/backend:0.0.4
+          image: index.docker.io/ezraroi/backend
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
