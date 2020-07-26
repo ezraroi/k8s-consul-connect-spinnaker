@@ -55,4 +55,11 @@ public class ApiController {
         response = restTemplate.getForEntity(this.backendUrl + "/api/error", Void.class);
         log.info("Got response code: " + response.getStatusCode());
     }
+
+    @GetMapping("/api/consul_dns")
+    public void consulDns() {
+        ResponseEntity<Void> response;
+        response = restTemplate.getForEntity("http://backend.service.consul/all", Void.class);
+        log.info("Got response code: " + response.getStatusCode());
+    }
 }
