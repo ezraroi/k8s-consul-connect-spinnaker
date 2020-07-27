@@ -3,16 +3,16 @@ kind: Deployment
 metadata:
   name: backend-deployment-baseline
   labels:
-    app: backend-baseline
+    app: backend
 spec:
   selector:
     matchLabels:
-      app: backend-baseline
+      app: backend
   replicas: 1
   template:
     metadata:
       labels:
-        app: backend-baseline
+        app: backend
         type: baseline
       annotations:
         'consul.hashicorp.com/connect-inject': 'true'

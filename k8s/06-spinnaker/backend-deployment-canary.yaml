@@ -3,16 +3,16 @@ kind: Deployment
 metadata:
   name: backend-deployment-canary
   labels:
-    app: backend-canary
+    app: backend
 spec:
   selector:
     matchLabels:
-      app: backend-canary
+      app: backend
   replicas: 1
   template:
     metadata:
       labels:
-        app: backend-canary
+        app: backend
         type: canary
       annotations:
         'consul.hashicorp.com/connect-inject': 'true'
