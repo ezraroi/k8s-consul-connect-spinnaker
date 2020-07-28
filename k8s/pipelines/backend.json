@@ -1,0 +1,72 @@
+{
+  "expectedArtifacts": [
+    {
+      "defaultArtifact": {
+        "customKind": true,
+        "id": "e4032774-5a13-47ee-a9e0-965283af6ac2"
+      },
+      "displayName": "quiet-otter-58",
+      "id": "c582540a-52f7-41ae-aa48-527538046c14",
+      "matchArtifact": {
+        "artifactAccount": "docker-registry",
+        "id": "e542e2e6-b563-4735-98d2-5320d4ddecad",
+        "name": "index.docker.io/ezraroi/backend",
+        "type": "docker/image"
+      },
+      "useDefaultArtifact": false,
+      "usePriorArtifact": false
+    }
+  ],
+  "keepWaitingPipelines": false,
+  "lastModifiedBy": "anonymous",
+  "limitConcurrent": true,
+  "spelEvaluator": "v4",
+  "stages": [
+    {
+      "account": "my-k8s-account",
+      "cloudProvider": "kubernetes",
+      "manifestArtifact": {
+        "artifactAccount": "ezraroi",
+        "id": "6611f793-b81a-43a1-ad3e-2c1dfbad1cfc",
+        "name": "k8s/06-spinnaker/backend-deployment.yaml",
+        "reference": "https://api.github.com/repos/ezraroi/k8s-consul-connect-spinnaker/contents/k8s/06-spinnaker/backend-deployment.yaml",
+        "type": "github/file"
+      },
+      "moniker": {
+        "app": "backend"
+      },
+      "name": "Deploy Service",
+      "namespaceOverride": "default",
+      "refId": "1",
+      "requiredArtifactIds": [
+        "c582540a-52f7-41ae-aa48-527538046c14"
+      ],
+      "requiredArtifacts": [],
+      "requisiteStageRefIds": [],
+      "skipExpressionEvaluation": false,
+      "source": "artifact",
+      "trafficManagement": {
+        "enabled": false,
+        "options": {
+          "enableTraffic": false,
+          "services": []
+        }
+      },
+      "type": "deployManifest"
+    }
+  ],
+  "triggers": [
+    {
+      "account": "dockerhub",
+      "enabled": true,
+      "expectedArtifactIds": [
+        "c582540a-52f7-41ae-aa48-527538046c14"
+      ],
+      "organization": "ezraroi",
+      "registry": "index.docker.io",
+      "repository": "ezraroi/backend",
+      "type": "docker"
+    }
+  ],
+  "updateTs": "1595855764000"
+}

@@ -1,0 +1,78 @@
+{
+  "applications": [
+    "backend"
+  ],
+  "classifier": {
+    "groupWeights": {
+      "REST": 80,
+      "System": 20
+    }
+  },
+  "configVersion": "1",
+  "createdTimestamp": 1595860155629,
+  "createdTimestampIso": "2020-07-27T14:29:15.629Z",
+  "description": "",
+  "judge": {
+    "judgeConfigurations": {},
+    "name": "NetflixACAJudge-v1.0"
+  },
+  "metrics": [
+    {
+      "analysisConfigurations": {
+        "canary": {
+          "direction": "increase"
+        }
+      },
+      "groups": [
+        "System"
+      ],
+      "name": "CPU",
+      "query": {
+        "customFilterTemplate": "pod",
+        "metricName": "process_cpu_usage",
+        "serviceType": "prometheus",
+        "type": "prometheus"
+      },
+      "scopeName": "default"
+    },
+    {
+      "analysisConfigurations": {},
+      "groups": [
+        "System"
+      ],
+      "name": "Memory",
+      "query": {
+        "customFilterTemplate": "pod",
+        "metricName": "jvm_gc_memory_allocated_bytes_total",
+        "serviceType": "prometheus",
+        "type": "prometheus"
+      },
+      "scopeName": "default"
+    },
+    {
+      "analysisConfigurations": {
+        "canary": {
+          "direction": "increase"
+        }
+      },
+      "groups": [
+        "REST"
+      ],
+      "name": "Server Errors",
+      "query": {
+        "customFilterTemplate": "pod_status_500",
+        "metricName": "http_server_requests_seconds_count",
+        "serviceType": "prometheus",
+        "type": "prometheus"
+      },
+      "scopeName": "default"
+    }
+  ],
+  "name": "backend-config",
+  "templates": {
+    "pod": "kubernetes_pod_name=~\"${scope}.+\"",
+    "pod_status_500": "kubernetes_pod_name=~\"${scope}.+\",status=\"500\""
+  },
+  "updatedTimestamp": 1595861378817,
+  "updatedTimestampIso": "2020-07-27T14:49:38.817Z"
+}

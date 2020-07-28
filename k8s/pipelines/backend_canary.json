@@ -1,0 +1,271 @@
+{
+    "expectedArtifacts": [
+      {
+        "defaultArtifact": {
+          "customKind": true,
+          "id": "5a2a0acb-e225-4c0a-ad44-84acde5d08f2"
+        },
+        "displayName": "proud-cougar-50",
+        "id": "9b7c0dce-6bef-4b8a-8467-5a8303d8aef6",
+        "matchArtifact": {
+          "artifactAccount": "docker-registry",
+          "id": "1ad55b6f-31ad-4084-a9ff-e7239210d508",
+          "name": "index.docker.io/ezraroi/backend",
+          "type": "docker/image"
+        },
+        "useDefaultArtifact": false,
+        "usePriorArtifact": false
+      }
+    ],
+    "keepWaitingPipelines": false,
+    "lastModifiedBy": "anonymous",
+    "limitConcurrent": true,
+    "spelEvaluator": "v4",
+    "stages": [
+      {
+        "account": "my-k8s-account",
+        "app": "backend",
+        "cloudProvider": "kubernetes",
+        "cluster": "deployment backend-deployment",
+        "criteria": "newest",
+        "expectedArtifacts": [
+          {
+            "defaultArtifact": {
+              "customKind": true,
+              "id": "66ae7de3-1952-4847-8a58-61d3b48225b8"
+            },
+            "displayName": "calm-eagle-72",
+            "id": "14ddbffa-df6a-48cc-b183-a7fbe265b4d5",
+            "matchArtifact": {
+              "artifactAccount": "docker-registry",
+              "id": "1346242b-05dd-4ec9-94fd-a07119c9890b",
+              "name": "index.docker.io/ezraroi/backend",
+              "type": "docker/image"
+            },
+            "useDefaultArtifact": false,
+            "usePriorArtifact": false
+          }
+        ],
+        "isNew": true,
+        "kind": "deployment",
+        "kinds": null,
+        "labelSelectors": null,
+        "location": "default",
+        "manifestName": "",
+        "mode": "dynamic",
+        "name": "Find Artifacts From Production",
+        "refId": "1",
+        "requisiteStageRefIds": [],
+        "type": "findArtifactsFromResource"
+      },
+      {
+        "account": "my-k8s-account",
+        "cloudProvider": "kubernetes",
+        "isNew": true,
+        "manifestArtifact": {
+          "artifactAccount": "ezraroi",
+          "id": "e37f2db9-3a6e-4e76-802f-e2e557f1d3e7",
+          "name": "k8s/06-spinnaker/backend-deployment-baseline.yaml",
+          "reference": "https://api.github.com/repos/ezraroi/k8s-consul-connect-spinnaker/contents/k8s/06-spinnaker/backend-deployment-baseline.yaml",
+          "type": "github/file"
+        },
+        "manifestArtifactId": null,
+        "moniker": {
+          "app": "backend"
+        },
+        "name": "Deploy Baseline",
+        "namespaceOverride": "default",
+        "refId": "2",
+        "requiredArtifactIds": [
+          "14ddbffa-df6a-48cc-b183-a7fbe265b4d5"
+        ],
+        "requiredArtifacts": [],
+        "requisiteStageRefIds": [
+          "1"
+        ],
+        "skipExpressionEvaluation": false,
+        "source": "artifact",
+        "trafficManagement": {
+          "enabled": false,
+          "options": {
+            "enableTraffic": false,
+            "namespace": null,
+            "services": [],
+            "strategy": null
+          }
+        },
+        "type": "deployManifest"
+      },
+      {
+        "account": "my-k8s-account",
+        "cloudProvider": "kubernetes",
+        "isNew": true,
+        "manifestArtifact": {
+          "artifactAccount": "ezraroi",
+          "id": "466e3a0b-5088-4338-908a-d03072be0f96",
+          "name": "k8s/06-spinnaker/backend-deployment-canary.yaml",
+          "reference": "https://api.github.com/repos/ezraroi/k8s-consul-connect-spinnaker/contents/k8s/06-spinnaker/backend-deployment-canary.yaml",
+          "type": "github/file"
+        },
+        "manifestArtifactId": null,
+        "moniker": {
+          "app": "backend"
+        },
+        "name": "Deploy Canary",
+        "namespaceOverride": "default",
+        "refId": "3",
+        "requiredArtifactIds": [
+          "9b7c0dce-6bef-4b8a-8467-5a8303d8aef6"
+        ],
+        "requiredArtifacts": [],
+        "requisiteStageRefIds": [
+          "1"
+        ],
+        "skipExpressionEvaluation": false,
+        "source": "artifact",
+        "trafficManagement": {
+          "enabled": false,
+          "options": {
+            "enableTraffic": false,
+            "namespace": null,
+            "services": [],
+            "strategy": null
+          }
+        },
+        "type": "deployManifest"
+      },
+      {
+        "analysisType": "realTime",
+        "canaryConfig": {
+          "beginCanaryAnalysisAfterMins": "1",
+          "canaryAnalysisIntervalMins": "1",
+          "canaryConfigId": "cbcd93e5-d76b-4a3a-89c7-d1a4596a5551",
+          "lifetimeDuration": "PT0H3M",
+          "metricsAccountName": "prom",
+          "scopes": [
+            {
+              "controlScope": "backend-deployment-baseline",
+              "experimentScope": "backend-deployment-canary",
+              "extendedScopeParams": {},
+              "scopeName": "default"
+            }
+          ],
+          "scoreThresholds": {
+            "marginal": "50",
+            "pass": "76"
+          },
+          "storageAccountName": "my-minio"
+        },
+        "completeOtherBranchesThenFail": false,
+        "continuePipeline": true,
+        "failPipeline": false,
+        "isNew": true,
+        "name": "Canary Analysis",
+        "refId": "4",
+        "requisiteStageRefIds": [
+          "2",
+          "3"
+        ],
+        "type": "kayentaCanary"
+      },
+      {
+        "account": "my-k8s-account",
+        "cloudProvider": "kubernetes",
+        "isNew": true,
+        "manifestArtifact": {
+          "artifactAccount": "ezraroi",
+          "id": "374e272c-e53d-4a13-9812-d541eecac29a",
+          "name": "k8s/06-spinnaker/backend-deployment.yaml",
+          "reference": "https://api.github.com/repos/ezraroi/k8s-consul-connect-spinnaker/contents/k8s/06-spinnaker/backend-deployment.yaml",
+          "type": "github/file"
+        },
+        "manifestArtifactId": null,
+        "moniker": {
+          "app": "backend"
+        },
+        "name": "Deploy Prod",
+        "namespaceOverride": "default",
+        "refId": "5",
+        "requiredArtifactIds": [
+          "9b7c0dce-6bef-4b8a-8467-5a8303d8aef6"
+        ],
+        "requiredArtifacts": [],
+        "requisiteStageRefIds": [
+          "4"
+        ],
+        "skipExpressionEvaluation": false,
+        "source": "artifact",
+        "stageEnabled": {
+          "expression": "${ #stage('CanaryAnalysis')['status'].toString() == 'SUCCEEDED' }",
+          "type": "expression"
+        },
+        "trafficManagement": {
+          "enabled": false,
+          "options": {
+            "enableTraffic": false,
+            "namespace": null,
+            "services": [],
+            "strategy": null
+          }
+        },
+        "type": "deployManifest"
+      },
+      {
+        "account": "my-k8s-account",
+        "app": "backend",
+        "cloudProvider": "kubernetes",
+        "cluster": null,
+        "criteria": null,
+        "isNew": true,
+        "kind": null,
+        "kinds": null,
+        "labelSelectors": null,
+        "location": "default",
+        "manifestName": "deployment backend-deployment-canary",
+        "mode": "static",
+        "name": "Delete (Manifest)",
+        "options": {
+          "cascading": true,
+          "gracePeriodSeconds": null
+        },
+        "refId": "6",
+        "requisiteStageRefIds": [
+          "4"
+        ],
+        "type": "deleteManifest"
+      },
+      {
+        "account": "my-k8s-account",
+        "app": "backend",
+        "cloudProvider": "kubernetes",
+        "isNew": true,
+        "location": "default",
+        "manifestName": "deployment backend-deployment-baseline",
+        "mode": "static",
+        "name": "Delete (Manifest)",
+        "options": {
+          "cascading": true,
+          "gracePeriodSeconds": null
+        },
+        "refId": "7",
+        "requisiteStageRefIds": [
+          "4"
+        ],
+        "type": "deleteManifest"
+      }
+    ],
+    "triggers": [
+      {
+        "account": "dockerhub",
+        "enabled": true,
+        "expectedArtifactIds": [
+          "9b7c0dce-6bef-4b8a-8467-5a8303d8aef6"
+        ],
+        "organization": "ezraroi",
+        "registry": "index.docker.io",
+        "repository": "ezraroi/backend",
+        "type": "docker"
+      }
+    ],
+    "updateTs": "1595861460000"
+  }

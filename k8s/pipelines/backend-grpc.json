@@ -1,0 +1,72 @@
+{
+  "expectedArtifacts": [
+    {
+      "defaultArtifact": {
+        "customKind": true,
+        "id": "19b79925-683c-42ac-a9a7-5adec4f5ab77"
+      },
+      "displayName": "lovely-catfish-52",
+      "id": "002703a4-2158-459e-a3a2-44dec4815908",
+      "matchArtifact": {
+        "artifactAccount": "docker-registry",
+        "id": "e6028d92-8067-4560-966c-baa12f9f38b2",
+        "name": "index.docker.io/ezraroi/backend-grpc",
+        "type": "docker/image"
+      },
+      "useDefaultArtifact": false,
+      "usePriorArtifact": false
+    }
+  ],
+  "keepWaitingPipelines": false,
+  "lastModifiedBy": "anonymous",
+  "limitConcurrent": true,
+  "spelEvaluator": "v4",
+  "stages": [
+    {
+      "account": "my-k8s-account",
+      "cloudProvider": "kubernetes",
+      "manifestArtifact": {
+        "artifactAccount": "ezraroi",
+        "id": "8dde98ab-c9b1-4df2-973b-a68f9e8559f1",
+        "name": "k8s/06-spinnaker/backend-grpc-deployment.yaml",
+        "reference": "https://api.github.com/repos/ezraroi/k8s-consul-connect-spinnaker/contents/k8s/06-spinnaker/backend-grpc-deployment.yaml",
+        "type": "github/file"
+      },
+      "moniker": {
+        "app": "backend-grpc"
+      },
+      "name": "Deploy Service",
+      "namespaceOverride": "default",
+      "refId": "1",
+      "requiredArtifactIds": [
+        "002703a4-2158-459e-a3a2-44dec4815908"
+      ],
+      "requiredArtifacts": [],
+      "requisiteStageRefIds": [],
+      "skipExpressionEvaluation": false,
+      "source": "artifact",
+      "trafficManagement": {
+        "enabled": false,
+        "options": {
+          "enableTraffic": false,
+          "services": []
+        }
+      },
+      "type": "deployManifest"
+    }
+  ],
+  "triggers": [
+    {
+      "account": "dockerhub",
+      "enabled": true,
+      "expectedArtifactIds": [
+        "002703a4-2158-459e-a3a2-44dec4815908"
+      ],
+      "organization": "ezraroi",
+      "registry": "index.docker.io",
+      "repository": "ezraroi/backend-grpc",
+      "type": "docker"
+    }
+  ],
+  "updateTs": "1595851566000"
+}

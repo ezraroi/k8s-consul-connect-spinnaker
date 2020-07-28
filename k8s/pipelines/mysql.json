@@ -1,0 +1,38 @@
+{
+    "keepWaitingPipelines": false,
+    "lastModifiedBy": "anonymous",
+    "limitConcurrent": true,
+    "spelEvaluator": "v4",
+    "stages": [
+      {
+        "account": "my-k8s-account",
+        "cloudProvider": "kubernetes",
+        "manifestArtifact": {
+          "artifactAccount": "ezraroi",
+          "id": "37fb32ef-49a8-4512-8159-98c4acbc0eee",
+          "name": "k8s/06-spinnaker/mysql-deployment.yaml",
+          "reference": "https://api.github.com/repos/ezraroi/k8s-consul-connect-spinnaker/contents/k8s/06-spinnaker/mysql-deployment.yaml",
+          "type": "github/file"
+        },
+        "moniker": {
+          "app": "backend"
+        },
+        "name": "Deploy MySQL",
+        "namespaceOverride": "default",
+        "refId": "1",
+        "requisiteStageRefIds": [],
+        "skipExpressionEvaluation": false,
+        "source": "artifact",
+        "trafficManagement": {
+          "enabled": false,
+          "options": {
+            "enableTraffic": false,
+            "services": []
+          }
+        },
+        "type": "deployManifest"
+      }
+    ],
+    "triggers": [],
+    "updateTs": "1595855454000"
+  }

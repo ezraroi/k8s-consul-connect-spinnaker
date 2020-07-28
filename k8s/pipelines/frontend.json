@@ -1,0 +1,144 @@
+{
+    "expectedArtifacts": [
+      {
+        "defaultArtifact": {
+          "customKind": true,
+          "id": "28d64a48-8ea6-4716-8d16-cba7bf9f2d6d"
+        },
+        "displayName": "gentle-lizard-7",
+        "id": "fd6806cc-9178-4179-9134-5182c7054ef6",
+        "matchArtifact": {
+          "artifactAccount": "docker-registry",
+          "id": "84d59eae-7670-484d-8403-493bd9ff9579",
+          "name": "index.docker.io/ezraroi/frontend",
+          "type": "docker/image"
+        },
+        "useDefaultArtifact": false,
+        "usePriorArtifact": false
+      }
+    ],
+    "keepWaitingPipelines": false,
+    "lastModifiedBy": "anonymous",
+    "limitConcurrent": true,
+    "spelEvaluator": "v4",
+    "stages": [
+      {
+        "account": "my-k8s-account",
+        "cloudProvider": "kubernetes",
+        "isNew": true,
+        "manifestArtifact": {
+          "artifactAccount": "ezraroi",
+          "id": "30b8b2bd-e219-45ca-ada7-d44e5943ffc2",
+          "name": "k8s/06-spinnaker/frontend-service.yaml",
+          "reference": "https://api.github.com/repos/ezraroi/k8s-consul-connect-spinnaker/contents/k8s/06-spinnaker/frontend-service.yaml",
+          "type": "github/file"
+        },
+        "manifestArtifactId": null,
+        "moniker": {
+          "app": "frontend"
+        },
+        "name": "Deploy Service",
+        "namespaceOverride": "default",
+        "refId": "1",
+        "requisiteStageRefIds": [],
+        "skipExpressionEvaluation": false,
+        "source": "artifact",
+        "trafficManagement": {
+          "enabled": false,
+          "options": {
+            "enableTraffic": false,
+            "namespace": null,
+            "services": [],
+            "strategy": null
+          }
+        },
+        "type": "deployManifest"
+      },
+      {
+        "account": "my-k8s-account",
+        "cloudProvider": "kubernetes",
+        "isNew": true,
+        "manifestArtifact": {
+          "artifactAccount": "ezraroi",
+          "id": "03ea991f-9def-4a6f-98e8-66551636d466",
+          "name": "k8s/06-spinnaker/frontend-configMap.yaml",
+          "reference": "https://api.github.com/repos/ezraroi/k8s-consul-connect-spinnaker/contents/k8s/06-spinnaker/frontend-configMap.yaml",
+          "type": "github/file"
+        },
+        "manifestArtifactId": null,
+        "moniker": {
+          "app": "frontend"
+        },
+        "name": "Deploy ConfigMap",
+        "namespaceOverride": "default",
+        "refId": "2",
+        "requisiteStageRefIds": [
+          "1"
+        ],
+        "skipExpressionEvaluation": false,
+        "source": "artifact",
+        "trafficManagement": {
+          "enabled": false,
+          "options": {
+            "enableTraffic": false,
+            "namespace": null,
+            "services": [],
+            "strategy": null
+          }
+        },
+        "type": "deployManifest"
+      },
+      {
+        "account": "my-k8s-account",
+        "cloudProvider": "kubernetes",
+        "isNew": true,
+        "manifestArtifact": {
+          "artifactAccount": "ezraroi",
+          "id": "16706d79-474d-4584-94c8-3d97eab2ef91",
+          "name": "k8s/06-spinnaker/frontend-deployment.yaml",
+          "reference": "https://api.github.com/repos/ezraroi/k8s-consul-connect-spinnaker/contents/k8s/06-spinnaker/frontend-deployment.yaml",
+          "type": "github/file"
+        },
+        "manifestArtifactId": null,
+        "moniker": {
+          "app": "frontend"
+        },
+        "name": "Deploy Service",
+        "namespaceOverride": "default",
+        "refId": "3",
+        "requiredArtifactIds": [
+          "fd6806cc-9178-4179-9134-5182c7054ef6"
+        ],
+        "requiredArtifacts": [],
+        "requisiteStageRefIds": [
+          "2"
+        ],
+        "skipExpressionEvaluation": false,
+        "source": "artifact",
+        "trafficManagement": {
+          "enabled": false,
+          "options": {
+            "enableTraffic": false,
+            "namespace": null,
+            "services": [],
+            "strategy": null
+          }
+        },
+        "type": "deployManifest"
+      }
+    ],
+    "triggers": [
+      {
+        "account": "dockerhub",
+        "enabled": true,
+        "expectedArtifactIds": [
+          "fd6806cc-9178-4179-9134-5182c7054ef6"
+        ],
+        "organization": "ezraroi",
+        "registry": "index.docker.io",
+        "repository": "ezraroi/frontend",
+        "type": "docker"
+      }
+    ],
+    "updateTs": "1595855885000"
+  }
