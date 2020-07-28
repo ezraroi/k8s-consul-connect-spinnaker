@@ -196,7 +196,7 @@
         "skipExpressionEvaluation": false,
         "source": "artifact",
         "stageEnabled": {
-          "expression": "${ #stage('CanaryAnalysis')['status'].toString() == 'SUCCEEDED' }",
+          "expression": "${ #stage('Canary Analysis')['status'].toString() == 'SUCCEEDED' }",
           "type": "expression"
         },
         "trafficManagement": {
