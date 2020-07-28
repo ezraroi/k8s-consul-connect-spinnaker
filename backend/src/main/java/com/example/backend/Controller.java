@@ -55,6 +55,9 @@ public class Controller {
     @GetMapping("/api/error")
     public void getError() {
         log.info("Api error was called");
+        int game = random.nextInt(100);
+        if (game <= 20)
+            throw new RuntimeException("Error");
         throw new RuntimeException("Error");
     }
 
